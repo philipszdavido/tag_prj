@@ -17,6 +17,9 @@ import routerProvider from "@pankod/refine-react-router-v6";
 
 import { authProvider, axiosInstance } from "./authProvider";
 import { API_URL } from "./constants";
+import { TagList } from "pages/TagList";
+import { TagCreate } from "pages/TagCreate";
+import { TagEdit } from "pages/TagEdit";
 
 function App() {
   return (
@@ -24,13 +27,24 @@ function App() {
       <Global styles={{ body: { WebkitFontSmoothing: "auto" } }} />
       <NotificationsProvider position="top-right">
         <Refine
-          authProvider={authProvider}
-          dataProvider={DataProvider(API_URL + `/api`, axiosInstance)}
+          dataProvider={DataProvider(
+            "https://api.fake-rest.refine.dev",
+            axiosInstance
+          )}
           notificationProvider={notificationProvider}
           Layout={Layout}
           ReadyPage={ReadyPage}
           catchAll={<ErrorComponent />}
           routerProvider={routerProvider}
+          resources={[
+            {
+              name: "tags",
+              list: TagList,
+              create: TagCreate,
+              edit: TagEdit,
+              canDelete: true,
+            },
+          ]}
         />
       </NotificationsProvider>
     </MantineProvider>
